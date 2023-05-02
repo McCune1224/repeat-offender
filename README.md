@@ -2,8 +2,8 @@
 title: SvelteKit
 description: A simple SvelteKit app
 tags:
-  - svelte
-  - typescript
+    - svelte
+    - typescript
 ---
 
 # SvelteKit Example
@@ -14,14 +14,14 @@ This example is a simple [SvelteKit](https://kit.svelte.dev/) app.
 
 ## ✨ Features
 
-- Svelte
-- TypeScript
+-   Svelte
+-   TypeScript
 
 ## 💁‍♀️ How to use
 
-- Install dependencies `yarn`
-- Connect to your Railway project `railway link`
-- Start the development server `railway run yarn dev`
+-   Install dependencies `yarn`
+-   Connect to your Railway project `railway link`
+-   Start the development server `railway run yarn dev`
 
 ## 📝 Notes
 
