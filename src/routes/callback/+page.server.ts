@@ -4,7 +4,16 @@ import {
 	SPOTIFY_CLIENT_SECRET,
 	SPOTIFY_REDIRECT_URL
 } from '$env/static/private';
-import type { PageServerLoad } from '../login/$types';
+import type { PageServerLoad } from './$types';
+
+// iunno I just kinda want the type incase I want to use it later
+type SpotifyTokenResponse = {
+	access_token: string;
+	token_type: string;
+	scope: string;
+	expires_in: number;
+	refresh_token: string;
+};
 
 export const load: PageServerLoad = async ({ cookies, fetch, url }) => {
 	// Get params from redirect
@@ -38,17 +47,21 @@ export const load: PageServerLoad = async ({ cookies, fetch, url }) => {
 		console.log('Error from Spotify: ', tokenResponseJson.error);
 		throw error(500, tokenResponseJson.error_description);
 	}
+	const validTokenResponse: SpotifyTokenResponse = {
+		access_token: tokenResponseJson['access_token'],
+		token_type: tokenResponseJson['token_type'],
+		scope: tokenResponseJson['scope'],
+		expires_in: tokenResponseJson['expires_in'],
+		refresh_token: tokenResponseJson['refresh_token']
+	};
 
-	console.log(tokenResponseJson);
 	// set token in cookie
 	if (cookies.get('spotify_token')) {
 		cookies.delete('spotify_token');
 	}
-	cookies.set('spotify_token', tokenResponseJson['access_token'], {
-		path: '/'
+	cookies.set('spotify_token', validTokenResponse.access_token, {
+		path: '/',
+		expires: new Date(Date.now() + 1000 * validTokenResponse.expires_in)
 	});
-
-	// redirect to /dashboard
-    console.log("FOOBARBAZ BABABOEY REDIRECT TO DASH")
 	throw redirect(301, '/dashboard');
 };

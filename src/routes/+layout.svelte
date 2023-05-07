@@ -5,6 +5,9 @@
 </script>
 
 <div>
+	<nav>
+		<a href="/dashboard">dashboard</a>
+	</nav>
 	<main>
 		<slot />
 	</main>
