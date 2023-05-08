@@ -1,29 +1,17 @@
----
-title: SvelteKit
-description: A simple SvelteKit app
-tags:
-    - svelte
-    - typescript
----
+# Spotify Playlist Duplicate Remover
+This website allows you to remove duplicate tracks from your Spotify playlists. Simply log in with your Spotify account and select the playlist you want to remove duplicates from. The website will display a list of all tracks in the playlist and allow you to remove any duplicates.
 
-# SvelteKit Example
-
-This example is a simple [SvelteKit](https://kit.svelte.dev/) app.
-
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/svelte-kit)
-
-## ✨ Features
-
--   Svelte
--   TypeScript
-
-## 💁‍♀️ How to use
-
--   Install dependencies `yarn`
--   Connect to your Railway project `railway link`
--   Start the development server `railway run yarn dev`
-
-## 📝 Notes
-
-This example was created by running `yarn create svelte`. Please see the [official
-documentation](https://kit.svelte.dev/docs) for more info.
+## Features
+* Log in with your Spotify account
+* Select a playlist to remove duplicates from
+* Display a list of all tracks in the playlist
+* Remove any duplicate tracks from the playlist
+* Authentication with Spotify using OAuth2
+* Developed using SvelteKit and TypeScript
+# Technologies Used
+* TypeScript
+* SvelteKit
+* OAuth2
+* Vite
+* Railway.app
+* Spotify Web API
