@@ -15,7 +15,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
     if (!spotifyUser) {
         throw error(500, 'Could not get Spotify user');
     }
-    console.log(spotifyUser);
 
     return {
         spotifyToken,
