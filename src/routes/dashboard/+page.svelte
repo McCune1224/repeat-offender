@@ -9,7 +9,6 @@
 </script>
 
 <div>
-	<h1>Page</h1>
-	<p>Greeetings {user.id}</p>
+	<h1>Dashboard</h1>
 	<Playlist {token} />
 </div>

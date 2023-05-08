@@ -26,15 +26,42 @@ export interface Artist {
 }
 
 export interface Track {
+	disc_number: number;
 	album: Album;
 	artists: Artist[];
 	external_urls: {
 		spotify: string;
 	};
+	href: string;
 	id: string;
 	name: string;
+	track_number: number;
 	type: string;
-	is_local: boolean;
+	uri: string;
+}
+
+export interface TrackResponse {
+	added_at: string;
+	added_by: {
+		external_urls: {
+			spotify: string;
+		};
+	};
+	video_thumbnail: {
+		url: string;
+	};
+	items: {
+		added_at: string;
+		added_by: {
+			external_urls: {
+				spotify: string;
+			};
+		};
+		video_thumbnail: {
+			url: string;
+		};
+		track: Track;
+	}[];
 }
 
 export interface Album {
@@ -60,7 +87,7 @@ export interface Album {
 		offset: number;
 		previous: string;
 		total: number;
-		items: Track[];
+		items: TrackResponse[];
 	};
 }
 
@@ -78,22 +105,25 @@ export interface Playlist {
 		display_name: string;
 	};
 	public: boolean;
-	snapshot_id: string;
 	tracks: {
 		href: string;
-		limit: number;
-		next: string;
-		offset: ?number;
-		previous: ?string;
 		total: number;
-		items: {
-			added_at: string;
-			added_by: {
-				external_urls: {
-					spotify: string;
-				};
-			};
-			track: Track;
-		};
 	};
+}
+export interface PlaylistResponse {
+	collaborative: boolean;
+	description: ?string;
+	external_urls: {
+		spotify: string;
+	};
+	href: string;
+	id: string;
+	images: SpotifyImage[];
+	name: string;
+	owner: {
+		display_name: string;
+	};
+	public: boolean;
+	snapshot_id: string;
+	items: Playlist[];
 }

@@ -63,5 +63,7 @@ export const load: PageServerLoad = async ({ cookies, fetch, url }) => {
 		path: '/',
 		expires: new Date(Date.now() + 1000 * validTokenResponse.expires_in)
 	});
-	throw redirect(301, '/dashboard');
+	console.log('spotify_token', validTokenResponse.access_token);
+	console.log('HIT FROM CALLBACK');
+	throw redirect(308, '/dashboard');
 };

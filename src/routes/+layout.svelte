@@ -1,14 +1,11 @@
 <script>
 	// TailwindCSS import
 	import '../app.css';
-	import Navbar from './Navbar.svelte';
 </script>
 
 <div>
-	<nav>
-		<a href="/dashboard">dashboard</a>
-	</nav>
 	<main>
+		<a href="/login">Login to Spotify</a>
 		<slot />
 	</main>
 
