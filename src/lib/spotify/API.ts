@@ -1,5 +1,12 @@
 import { error } from '@sveltejs/kit';
-import type { Playlist, PlaylistResponse, SpotifyUser, Track, TrackResponse } from './spotifyTypes';
+import type {
+	Playlist,
+	PlaylistItemsResponse,
+	PlaylistResponse,
+	SpotifyUser,
+	Track,
+	TrackResponse
+} from './spotifyTypes';
 
 const SPOTIFY_API_BASE_URL = 'https://api.spotify.com/v1';
 
@@ -65,4 +72,27 @@ export function GetTrackDuplicates(items: Array<Track>): Array<Track> {
 		}
 	});
 	return duplicates;
+}
+
+export async function GetAllPlaylistTracks(
+	accessToken: string,
+	playlistId: string
+): Promise<Track[]> {
+	let offset = 0;
+	let limit = 100;
+	let tracks: Track[] = [];
+	let playlistItems = await SpotifyAPIRequest<PlaylistItemsResponse>(
+		`/playlists/${playlistId}/tracks`,
+		accessToken
+	);
+	tracks = tracks.concat(playlistItems.items.map((item) => item.track));
+	while (playlistItems.next) {
+		offset += limit;
+		playlistItems = await SpotifyAPIRequest<PlaylistItemsResponse>(
+			`/playlists/${playlistId}/tracks?offset=${offset}`,
+			accessToken
+		);
+		tracks = tracks.concat(playlistItems.items.map((item) => item.track));
+	}
+	return tracks;
 }

@@ -127,3 +127,21 @@ export interface PlaylistResponse {
 	snapshot_id: string;
 	items: Playlist[];
 }
+
+export interface PlaylistItemsResponse {
+	href: string;
+	limit: number;
+	next: string;
+	offset: number;
+	previous: string;
+	total: number;
+	items: {
+		added_at: string;
+		added_by: {
+			external_urls: {
+				spotify: string;
+			};
+		};
+		track: Track;
+	}[];
+}

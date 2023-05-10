@@ -1,25 +1,28 @@
-import { GetMe } from '$lib/spotify/API';
+import { GetMe, GetUserPlaylists } from '$lib/spotify/API';
 import { redirect, error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export type spotifyToken = string;
 
 export const load: PageServerLoad = async ({ cookies }) => {
-	const spotifyToken = cookies.get('spotify_token');
-	console.log('spotifyToken', spotifyToken);
+    const spotifyToken = cookies.get('spotify_token');
+    console.log('spotifyToken', spotifyToken);
 
-	if (!spotifyToken) {
-		console.log('HIT FROM DASH');
-		throw redirect(308, '/');
-	}
+    if (!spotifyToken) {
+        console.log('NO SPOTIFY TOKEN');
+        throw error(500, 'No Spotify token');
+    }
 
-	const spotifyUser = await GetMe(spotifyToken);
-	if (!spotifyUser) {
-		throw error(500, 'Could not get Spotify user');
-	}
+    const spotifyUser = await GetMe(spotifyToken);
+    if (!spotifyUser) {
+        throw error(500, 'Could not get Spotify user');
+    }
 
-	return {
-		spotifyToken,
-		spotifyUser
-	};
+    const initialPlaylist = await GetUserPlaylists(spotifyToken);
+
+    return {
+        spotifyToken,
+        spotifyUser,
+        initialPlaylist
+    };
 };
