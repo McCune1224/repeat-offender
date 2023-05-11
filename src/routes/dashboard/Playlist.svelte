@@ -74,6 +74,7 @@
 		</p>
 		<div>
 			<button
+				class="disabled:text-gray-500"
 				disabled={PaginationOpts.offset === 0}
 				on:click={async () => {
 					await changePlaylistPage(true);
@@ -99,13 +100,19 @@
 				>
 					<button
 						class="disabled:text-gray-500"
-						disabled={buttonDisabled}
+						disabled={buttonDisabled ||
+							playlist.owner.display_name != data.spotifyUser.display_name}
 						on:click={async () => {
 							console.log(buttonDisabled);
 							await handleGetAllTracksClick(token, playlist);
 							console.log(buttonDisabled);
 						}}
 					>
+						{#if playlist.owner.display_name != data.spotifyUser.display_name}
+							<p class="text-red-200">
+								( You don't have edit permissions for this playlist )
+							</p>
+						{/if}
 						<h3>{playlist.name}</h3>
 						{#if buttonDisabled && currPlaylistID === playlist.id}
 							<Loading />
@@ -113,7 +120,9 @@
 					</button>
 					<li id={playlist.id}>
 						{#if duplicateTracks.length > 0 && currPlaylistID === playlist.id}
-							<h1 class="text-red-200">Duplicates Detected</h1>
+							<p class="text-red-200">
+								{duplicateTracks.length} Duplicates Detected:
+							</p>
 							{#each duplicateTracks as duplicateTrack}
 								<p>{duplicateTrack.name}</p>
 							{/each}
@@ -129,6 +138,7 @@
 		</p>
 		<div>
 			<button
+				class="disabled:text-gray-500"
 				disabled={PaginationOpts.offset === 0}
 				on:click={async () => {
 					await changePlaylistPage(true);
