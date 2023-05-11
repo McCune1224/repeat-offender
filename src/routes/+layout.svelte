@@ -7,13 +7,13 @@
 </script>
 
 <div>
-	<nav>
-		<ul
-			class="
-            flex flex-row justify-between items-center
-            bg-zinc-900 text-stone-100 py-4 px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24
-            "
-		>
+	<nav
+		class="
+        sticky top-0 z-50 w-full h-16 flex flex-row justify-between items-center
+        bg-zinc-900 text-stone-100 py-4 px-8 sm:px-12 md:px-16 lg:px-20 xl:px-24
+        "
+	>
+		<ul>
 			<li>
 				<h1>Repeat Offender</h1>
 			</li>
@@ -27,18 +27,20 @@
 			</li>
 		</ul>
 	</nav>
-	<main>
-		<slot />
-	</main>
+	<div class="mx-10 bg-zinc-200 text-center">
+		<main>
+			<slot />
+		</main>
 
-	<footer>
-		<p>Some footer...</p>
-	</footer>
+		<footer>
+			<p>Some footer...</p>
+		</footer>
+	</div>
 </div>
 
 <style lang="postcss">
 	:global(html) {
-		background-color: theme(colors.zinc.900);
-		color: theme(colors.white);
+		background-color: theme(colors.zinc.200);
+		/* color: theme(colors.white); */
 	}
 </style>
