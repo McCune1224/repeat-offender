@@ -27,7 +27,7 @@
 			</li>
 		</ul>
 	</nav>
-	<div class="mx-10 bg-zinc-200 text-center">
+	<div class="mx-10 text-center">
 		<main>
 			<slot />
 		</main>
@@ -40,7 +40,7 @@
 
 <style lang="postcss">
 	:global(html) {
-		background-color: theme(colors.zinc.200);
-		/* color: theme(colors.white); */
+		background-color: theme(colors.zinc.900);
+		color: theme(colors.white);
 	}
 </style>

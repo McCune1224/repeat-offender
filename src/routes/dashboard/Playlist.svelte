@@ -93,13 +93,8 @@
 	<div>
 		<ul>
 			{#each userPlaylists as playlist}
-				<div
-					class="
-                    flex flex-col bg-gray-100 rounded-md p-2 m-2 shadow-md hover:shadow-lg transition duration-300 ease-in-out
-                    "
-				>
+				<div class="">
 					<button
-						class="disabled:text-gray-500"
 						disabled={buttonDisabled ||
 							playlist.owner.display_name != data.spotifyUser.display_name}
 						on:click={async () => {
@@ -114,20 +109,37 @@
 							</p>
 						{/if}
 						<h3>{playlist.name}</h3>
-						{#if buttonDisabled && currPlaylistID === playlist.id}
-							<Loading />
-						{/if}
+						<li id={playlist.id}>
+							{#if duplicateTracks.length > 0 && currPlaylistID === playlist.id}
+								<p>
+									{duplicateTracks.length} Duplicates Detected:
+								</p>
+								<ul
+									class="
+                                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
+                                "
+								>
+									{#each duplicateTracks as duplicateTrack}
+										<li>
+											<p>
+												{duplicateTrack.name} - {duplicateTrack.artists[0]
+													.name}
+											</p>
+										</li>
+									{/each}
+								</ul>
+								<div>
+									<button
+										class="
+                                bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded
+                                    "
+									>
+										Delete Duplicates
+									</button>
+								</div>
+							{/if}
+						</li>
 					</button>
-					<li id={playlist.id}>
-						{#if duplicateTracks.length > 0 && currPlaylistID === playlist.id}
-							<p class="text-red-200">
-								{duplicateTracks.length} Duplicates Detected:
-							</p>
-							{#each duplicateTracks as duplicateTrack}
-								<p>{duplicateTrack.name}</p>
-							{/each}
-						{/if}
-					</li>
 				</div>
 			{/each}
 		</ul>
