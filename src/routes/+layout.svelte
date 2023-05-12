@@ -1,5 +1,4 @@
 <script lang="ts">
-	// TailwindCSS import
 	import '../app.css';
 	import type { LayoutServerData } from './$types';
 

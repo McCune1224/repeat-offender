@@ -8,7 +8,7 @@
 	} from '$lib/spotify/API';
 	import type { Playlist, Track } from '$lib/spotify/spotifyTypes';
 	import type { PageServerData } from './$types';
-	import Loading from './Loading.svelte';
+	import PaginationPager from './PaginationPager.svelte';
 
 	export let PaginationOpts = {
 		limit: 10,
@@ -20,7 +20,6 @@
 
 	PaginationOpts;
 
-	let currentPage = 1;
 	let userPlaylists: Playlist[] = data.initialPlaylist;
 	let duplicateTracks: Track[] = [];
 	let buttonDisabled = false;
@@ -51,7 +50,6 @@
 				PaginationOpts.offset
 			);
 			userPlaylists = previousPagePlaylists;
-			currentPage -= 1;
 			return;
 		} else {
 			PaginationOpts.offset += PaginationOpts.limit;
@@ -61,7 +59,6 @@
 				PaginationOpts.offset
 			);
 			userPlaylists = nextPagePlaylists;
-			currentPage += 1;
 			return;
 		}
 	};
@@ -69,100 +66,78 @@
 
 <section>
 	<div>
-		<p>
-			{currentPage}
-		</p>
-		<div>
-			<button
-				class="disabled:text-gray-500"
-				disabled={PaginationOpts.offset === 0}
-				on:click={async () => {
-					await changePlaylistPage(true);
-				}}>Previous</button
-			>
-			<button
-				class="disabled:text-gray-500"
-				disabled={userPlaylists.length < PaginationOpts.limit}
-				on:click={async () => {
-					await changePlaylistPage(false);
-				}}>Next</button
-			>
-		</div>
-	</div>
+		<PaginationPager
+			nextDisabled={userPlaylists.length < PaginationOpts.limit}
+			nextPage={async () => {
+				await changePlaylistPage(false);
+			}}
+			prevPage={async () => {
+				await changePlaylistPage(true);
+			}}
+		/>
 
-	<div>
-		<ul>
-			{#each userPlaylists as playlist}
-				<div class="">
-					<button
-						disabled={buttonDisabled ||
-							playlist.owner.display_name != data.spotifyUser.display_name}
-						on:click={async () => {
-							console.log(buttonDisabled);
-							await handleGetAllTracksClick(token, playlist);
-							console.log(buttonDisabled);
-						}}
-					>
-						{#if playlist.owner.display_name != data.spotifyUser.display_name}
-							<p class="text-red-200">
-								( You don't have edit permissions for this playlist )
-							</p>
-						{/if}
-						<h3>{playlist.name}</h3>
-						<li id={playlist.id}>
-							{#if duplicateTracks.length > 0 && currPlaylistID === playlist.id}
-								<p>
-									{duplicateTracks.length} Duplicates Detected:
+		<div>
+			<ul>
+				{#each userPlaylists as playlist}
+					<div class="">
+						<button
+							disabled={buttonDisabled ||
+								playlist.owner.display_name != data.spotifyUser.display_name}
+							on:click={async () => {
+								console.log(buttonDisabled);
+								await handleGetAllTracksClick(token, playlist);
+								console.log(buttonDisabled);
+							}}
+						>
+							{#if playlist.owner.display_name != data.spotifyUser.display_name}
+								<p class="text-red-200 disabled:text-sky-300">
+									( You don't have edit permissions for this playlist )
 								</p>
-								<ul
-									class="
+							{/if}
+							<h3>{playlist.name}</h3>
+							<li id={playlist.id}>
+								{#if duplicateTracks.length > 0 && currPlaylistID === playlist.id}
+									<p>
+										{duplicateTracks.length} Duplicates Detected:
+									</p>
+									<ul
+										class="
                                 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5
                                 "
-								>
-									{#each duplicateTracks as duplicateTrack}
-										<li>
-											<p>
-												{duplicateTrack.name} - {duplicateTrack.artists[0]
-													.name}
-											</p>
-										</li>
-									{/each}
-								</ul>
-								<div>
-									<button
-										class="
+									>
+										{#each duplicateTracks as duplicateTrack}
+											<li>
+												<p>
+													{duplicateTrack.name} - {duplicateTrack
+														.artists[0].name}
+												</p>
+											</li>
+										{/each}
+									</ul>
+									<div>
+										<button
+											class="
                                 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded
                                     "
-									>
-										Delete Duplicates
-									</button>
-								</div>
-							{/if}
-						</li>
-					</button>
-				</div>
-			{/each}
-		</ul>
-	</div>
-	<div>
-		<p>
-			{currentPage}
-		</p>
-		<div>
-			<button
-				class="disabled:text-gray-500"
-				disabled={PaginationOpts.offset === 0}
-				on:click={async () => {
-					await changePlaylistPage(true);
-				}}>Previous</button
-			>
-			<button
-				class="disabled:text-gray-500"
-				disabled={userPlaylists.length < PaginationOpts.limit}
-				on:click={async () => {
-					await changePlaylistPage(false);
-				}}>Next</button
-			>
+										>
+											Delete Duplicates
+										</button>
+									</div>
+								{/if}
+							</li>
+						</button>
+					</div>
+				{/each}
+			</ul>
 		</div>
+		<PaginationPager
+			nextDisabled={userPlaylists.length < PaginationOpts.limit}
+			nextPage={async () => {
+				await changePlaylistPage(false);
+			}}
+			prevPage={async () => {
+				await changePlaylistPage(true);
+			}}
+		/>
 	</div>
 </section>
