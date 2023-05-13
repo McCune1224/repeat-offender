@@ -3,7 +3,7 @@
 </script>
 
 <div>
-	<section>
+	<section class="text-center">
 		<h1
 			class="py-32 font-extrabold font-mono italic
             outline-black text-9xl bg-gradient-to-r
@@ -67,7 +67,7 @@
                     and remove duplicate tracks from them. We do not store any of your data."
 			/>
 			<QuestionCard
-				title="Does this work with other music streaming services? (Amazon Music, Apple Music, etc.)"
+				title="Does this work with other music streaming services? (Amazon Music, Apple Music, etc...)"
 				description="Currently, Repeat Offender is only compatible with Spotify.
                     With that said, if I get enough requests for other services, I will work towards adding them."
 			/>

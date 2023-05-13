@@ -26,13 +26,35 @@
 			</li>
 		</ul>
 	</nav>
-	<div class="mx-10 text-center">
-		<main>
+	<div class="mx-10 flex flex-col h-screen">
+		<main class="mb-auto">
 			<slot />
 		</main>
 
-		<footer>
-			<p>Some footer...</p>
+		<footer class="h-10 text-center text-gray-400">
+			<h4 class="">
+				Built by
+				<b
+					class="font-extrabold italic
+            outline-black text-lg bg-gradient-to-r
+            from-amber-500 to-pink-500 bg-clip-text text-transparent"
+				>
+					Alex McCune</b
+				>
+			</h4>
+			<ul class="flex justify-center gap-5">
+				<li class="hover:text-zinc-300">
+					<a target="_blank" href="https://github.com/mccune1224">GitHub</a>
+				</li>
+				<li class="hover:text-sky-300">
+					<a target="_blank" href="https://twitter.com/KusAlexM">Twitter</a>
+				</li>
+				<li class="hover:text-blue-400">
+					<a target="_blank" href="https://www.linkedin.com/in/alexander-mccune/"
+						>LinkedIn</a
+					>
+				</li>
+			</ul>
 		</footer>
 	</div>
 </div>

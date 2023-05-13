@@ -25,7 +25,7 @@ export interface Artist {
 	images: SpotifyImage[];
 }
 
-export interface Track {
+export interface TrackItems {
 	disc_number: number;
 	album: Album;
 	artists: Artist[];
@@ -60,7 +60,7 @@ export interface TrackResponse {
 		video_thumbnail: {
 			url: string;
 		};
-		track: Track;
+		track: TrackItems;
 	}[];
 }
 
@@ -91,7 +91,7 @@ export interface Album {
 	};
 }
 
-export interface Playlist {
+export interface PlaylistItems {
 	collaborative: boolean;
 	description: ?string;
 	external_urls: {
@@ -110,6 +110,17 @@ export interface Playlist {
 		total: number;
 	};
 }
+
+export interface UserPlaylistsResponse {
+	href: string;
+	limit: number;
+	next: string;
+	offset: number;
+	previous: string;
+	total: number;
+	items: PlaylistItems[];
+}
+
 export interface PlaylistResponse {
 	collaborative: boolean;
 	description: ?string;
@@ -125,7 +136,7 @@ export interface PlaylistResponse {
 	};
 	public: boolean;
 	snapshot_id: string;
-	items: Playlist[];
+	items: PlaylistItems[];
 }
 
 export interface PlaylistItemsResponse {
@@ -142,6 +153,19 @@ export interface PlaylistItemsResponse {
 				spotify: string;
 			};
 		};
-		track: Track;
+		track: TrackItems;
+	}[];
+}
+
+export interface SavedUserTrackResponse {
+	href: string;
+	limit: number;
+	next: string;
+	offset: number;
+	previous: string;
+	total: number;
+	items: {
+		added_at: string;
+		track: TrackItems;
 	}[];
 }

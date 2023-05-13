@@ -6,7 +6,6 @@ export type spotifyToken = string;
 
 export const load: PageServerLoad = async ({ cookies }) => {
     const spotifyToken = cookies.get('spotify_token');
-    console.log('spotifyToken', spotifyToken);
 
     if (!spotifyToken) {
         console.log('NO SPOTIFY TOKEN');
