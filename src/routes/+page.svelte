@@ -12,7 +12,7 @@
 			REPEAT OFFENDER
 		</h1>
 		<h3
-			class="text-3xl font-bold font-mono italic text-gray-100
+			class="text-3xl font-bold font-mono italic 
             mb-10 mx-10 px-10 sm:px-12 md:px-16 lg:px-20 xl:px-24"
 		>
 			Duplicate Tracks Begone
@@ -31,7 +31,7 @@
 			></button
 		>
 		<p
-			class=" py-20 text-xl font-bold font-mono italic text-gray-300
+			class=" py-20 text-xl font-bold font-mono italic
             mb-10 mx-10 px-10 sm:px-12 md:px-16 lg:px-20 xl:px-24"
 		>
 			This web-based application offers a hassle-free way to scan and remove duplicate tracks
@@ -42,7 +42,7 @@
 	</section>
 	<section>
 		<h2
-			class="text-5xl font-bold font-mono italic text-gray-100 mb-10 mx-10 px-10 sm:px-12 md:px-16 lg:px-20 xl:px-24 text-center"
+			class="text-5xl font-bold font-mono italic mb-10 mx-10 px-10 sm:px-12 md:px-16 lg:px-20 xl:px-24 text-center"
 		>
 			FAQ
 		</h2>

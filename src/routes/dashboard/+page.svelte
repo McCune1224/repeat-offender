@@ -13,6 +13,7 @@
 		GetUserSavedTracks
 	} from '$lib/spotify/API';
 	import { onMount } from 'svelte';
+	import PlaylistCard from './PlaylistCard.svelte';
 	export let data: PageData;
 	export const token = data.spotifyToken;
 
@@ -26,6 +27,7 @@
 
 	let offenders: Offender[] = [];
 	let likedSongs: TrackItems[] = [];
+	let likedDuplicates: TrackItems[] = [];
 	let totalPlaylists = 0;
 	let currentlyAnalyzedPlaylists = 0;
 
@@ -41,47 +43,81 @@
 			//Get the tracks for the playlist
 			const tracks = await GetAllPlaylistTracks(token, playlist.id);
 			const duplicates = GetTrackDuplicates(tracks);
-			console.log(`GOT ${duplicates.length} DUPLICATES FOR ${playlist.name}`);
+			// Sort alphabetically before pushing to offenders
+			duplicates.sort((a, b) => a.id.localeCompare(b.id));
+			if (duplicates.length > 0) {
+				offenders.push({
+					playlist: playlist,
+					repeatTracks: duplicates
+				});
+			}
 			currentlyAnalyzedPlaylists++;
 		});
 
-		//Get all liked songs
-		/* likedSongs = await GetUserSavedTracks(token, 50); */
+		//Liked songs need to be done separately as they're not under the same endpoint
+		// as the other playlists
 		likedSongs = await GetUserSavedTracks(token, 50);
+		/* likedSongs = await GetUserSavedTracks(token); */
 
 		//Go through all liked songs and find duplicates
-		const likedDuplicates = GetTrackDuplicates(likedSongs);
+		likedDuplicates = GetTrackDuplicates(likedSongs);
+		likedDuplicates.sort((a, b) => a.id.localeCompare(b.id));
 		currentlyAnalyzedPlaylists += 1;
-		console.log(`LIKED SONGS HAS ${likedDuplicates.length} DUPLICATES`);
 
 		//Jobs Done
 	});
-
-	/* TODO:
-        1. Make card component to display each Playlist and its respective duplicates in 
-        2. CSS :(
-    */
 </script>
 
 <div>
-	<h1>Greetings {user.display_name}</h1>
-	<h2>Liked Songs</h2>
-	{#if totalPlaylists != 0}
-		<h3>Found {totalPlaylists} to analyze</h3>
-		<h3>Analyzing {currentlyAnalyzedPlaylists}/{totalPlaylists} Playlists</h3>
+	{#if totalPlaylists != 0 && currentlyAnalyzedPlaylists != totalPlaylists}
+		<h3
+			class="py-10 text-6xl font-bold text-center animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
+		>
+			Analyzing {currentlyAnalyzedPlaylists}/{totalPlaylists} Playlists
+		</h3>
+		{#if currentlyAnalyzedPlaylists == 0}
+			<h3
+				class="text-6xl font-bold text-center animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
+			>
+				Getting Your Library Playlist Details...
+			</h3>
+		{/if}
 	{/if}
 
-	<h2>Playlists</h2>
-	{#each playlists as playlist}
-		<p>{playlist.name}</p>
-	{:else}
-		<p>Fetching Spotify Playlists...</p>
-	{/each}
-
-	<h2>Liked Songs</h2>
-	{#each likedSongs as song}
-		<p>{song.name}</p>
-	{:else}
-		<p>Loading...</p>
-	{/each}
+	{#if currentlyAnalyzedPlaylists == totalPlaylists && totalPlaylists != 0}
+		<h3
+			class="text-6xl font-bold text-center py-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
+		>
+			Found {offenders.length} playlists with duplicates
+		</h3>
+		{#if offenders.length > 0}
+			{#each offenders as repeatOffender}
+				<!-- {#if repeatOffender.playlist.images.length > 0} -->
+				<!-- 	<img src={repeatOffender.playlist.images[0].url} alt="Playlist Icon" /> -->
+				<!-- {/if} -->
+				<div class="py-10">
+					<PlaylistCard
+						title={repeatOffender.playlist.name}
+						items={repeatOffender.repeatTracks.map(
+							(song) => `${song.name} - ${song.artists[0].name}`
+						)}
+						image={repeatOffender.playlist.images[0]}
+					/>
+				</div>
+			{/each}
+			{#if likedDuplicates.length > 0}
+				<PlaylistCard
+					title="Liked Songs"
+					items={likedDuplicates.map((song) => song.name)}
+					image={null}
+				/>
+			{/if}
+		{:else}
+			<h3
+				class="text-6xl font-bold text-center  text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
+			>
+				No duplicates found in your Library :)
+			</h3>
+		{/if}
+	{/if}
 </div>

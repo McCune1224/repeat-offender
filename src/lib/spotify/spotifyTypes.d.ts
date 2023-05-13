@@ -38,6 +38,7 @@ export interface TrackItems {
 	track_number: number;
 	type: string;
 	uri: string;
+    duration_ms: number;
 }
 
 export interface TrackResponse {
