@@ -56,7 +56,7 @@
 
 		//Liked songs need to be done separately as they're not under the same endpoint
 		// as the other playlists
-		likedSongs = await GetUserSavedTracks(token, 50);
+		likedSongs = await GetUserSavedTracks(token, 200);
 		/* likedSongs = await GetUserSavedTracks(token); */
 
 		//Go through all liked songs and find duplicates
@@ -70,24 +70,13 @@
 
 <div>
 	{#if totalPlaylists != 0 && currentlyAnalyzedPlaylists != totalPlaylists}
-		<h3
-			class="py-10 text-6xl font-bold text-center animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
-		>
+		<h3 class="py-10 text-6xl font-bold text-center animate-pulse">
 			Analyzing {currentlyAnalyzedPlaylists}/{totalPlaylists} Playlists
 		</h3>
-		{#if currentlyAnalyzedPlaylists == 0}
-			<h3
-				class="text-6xl font-bold text-center animate-pulse text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
-			>
-				Getting Your Library Playlist Details...
-			</h3>
-		{/if}
 	{/if}
 
 	{#if currentlyAnalyzedPlaylists == totalPlaylists && totalPlaylists != 0}
-		<h3
-			class="text-6xl font-bold text-center py-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
-		>
+		<h3 class="text-6xl font-bold text-center py-10">
 			Found {offenders.length} playlists with duplicates
 		</h3>
 		{#if offenders.length > 0}
@@ -98,23 +87,25 @@
 				<div class="py-10">
 					<PlaylistCard
 						title={repeatOffender.playlist.name}
-						items={repeatOffender.repeatTracks.map(
-							(song) => `${song.name} - ${song.artists[0].name}`
-						)}
+                        playlistID={repeatOffender.playlist.id}
+						items={repeatOffender.repeatTracks}
 						image={repeatOffender.playlist.images[0]}
+                        token={token}
 					/>
 				</div>
 			{/each}
 			{#if likedDuplicates.length > 0}
 				<PlaylistCard
 					title="Liked Songs"
-					items={likedDuplicates.map((song) => song.name)}
+                    playlistID=""
+					items={likedDuplicates}
 					image={null}
+                    token={token}
 				/>
 			{/if}
 		{:else}
 			<h3
-				class="text-6xl font-bold text-center  text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
+				class="text-6xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-500"
 			>
 				No duplicates found in your Library :)
 			</h3>

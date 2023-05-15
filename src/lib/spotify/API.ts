@@ -7,7 +7,8 @@ import type {
     SpotifyUser,
     TrackItems,
     TrackResponse,
-    SavedUserTrackResponse
+    SavedUserTrackResponse,
+    ErrorResponse
 } from './spotifyTypes';
 
 const SPOTIFY_API_BASE_URL = 'https://api.spotify.com/v1';
@@ -185,4 +186,78 @@ export async function GetUserSavedTracks(accessToken: string, max?: number): Pro
     }
     console.log('JOBS DONE');
     return tracks;
+}
+
+export async function DeleteDuplicateTracksFromPlaylist(
+    accessToken: string,
+    playlistId: string,
+    trackIds: string[]
+): Promise<Response> {
+    const uniqueTrackUris: string[] = [];
+
+    // Iterate through the trackIds array and add unique track URIs to uniqueTrackUris
+    trackIds.forEach((trackId) => {
+        const trackUri = `spotify:track:${trackId}`;
+        if (!uniqueTrackUris.includes(trackUri)) {
+            uniqueTrackUris.push(trackUri);
+        }
+    });
+
+    const uriDeleteBody = {
+        tracks: uniqueTrackUris.map((uri) => ({ uri }))
+    };
+
+    console.log(uniqueTrackUris);
+    console.log(uriDeleteBody);
+    const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(uriDeleteBody)
+    });
+
+    console.log('DELETE DUPLICATE TRACKS RESPONSE: ', response);
+
+    // For some reason the playlists get completely deleted even if I only pass in one track id
+    // When there are multiple tracks, the tracks get deleted but the playlist is still there
+    // So just going to reappend the tracks to the playlist afterwards
+
+    //For POST Body only takes in format of {"uris": "spotify:track:[id],spotify:track:[id]..."}
+
+    const uriPostBody = {
+        uris: uniqueTrackUris
+    };
+    const reappendResponse = await fetch(
+        `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+        {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(uriPostBody)
+        }
+    );
+    console.log('REAPPEND RESPONSE: ', await reappendResponse.json());
+    return reappendResponse;
+}
+
+export async function DeleteDuplicateSavedTracks(
+    accessToken: string,
+    trackIds: string[]
+): Promise<ErrorResponse> {
+    const trackUris = trackIds.map((trackId) => `spotify:track:${trackId}`);
+    const response = await SpotifyAPIRequest<ErrorResponse>(`/me/tracks`, accessToken, {
+        method: 'DELETE',
+        body: JSON.stringify({
+            ids: trackIds
+        })
+    });
+
+    console.log('DELTE SAVED TRACKS RESPONSE: ', response.error.status);
+    console.log('DELTE SAVED TRACKS RESPONSE: ', response.error.status);
+
+    return response;
 }

@@ -1,3 +1,9 @@
+export interface ErrorResponse {
+	error: {
+		status: number;
+		message: string;
+	};
+}
 export interface SpotifyUser {
 	display_name: string;
 	email: string;
@@ -38,7 +44,7 @@ export interface TrackItems {
 	track_number: number;
 	type: string;
 	uri: string;
-    duration_ms: number;
+	duration_ms: number;
 }
 
 export interface TrackResponse {

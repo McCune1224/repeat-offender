@@ -6,36 +6,36 @@
 	<section class="text-center">
 		<h1
 			class="py-32 font-extrabold font-mono italic
-            outline-black text-9xl bg-gradient-to-r
-            from-amber-500 to-pink-500 bg-clip-text text-transparent"
+            text-9xl"
 		>
 			REPEAT OFFENDER
 		</h1>
-		<h3
-			class="text-3xl font-bold font-mono italic 
+		<p
+			class="text-3xl font-bold font-mono
             mb-10 mx-10 px-10 sm:px-12 md:px-16 lg:px-20 xl:px-24"
 		>
-			Duplicate Tracks Begone
-		</h3>
+			Removing track duplicates made easy
+		</p>
 		<button
 			class="
-            bg-gradient-to-r from-amber-500 to-pink-500
-            hover:from-amber-600 hover:to-pink-600
-            text-white font-bold py-2 px-4 rounded
+            text-zinc-900 bg-emerald-200 hover:bg-emerald-300 active:bg-emerald-400
+            text-5xl
+            font-bold py-2 px-4
+            backdrop-filter backdrop-blur-lg shadow-lg rounded-lg p-6
+            hover:backdrop-blur-xl hover:shadow-xl
             "
 			><a
 				class="
-                text-4xl text-white font-bold py-2 px-4 rounded
                 "
-				href="/login">Sign into Spotify to Get started!</a
+				href="/login">Get started</a
 			></button
 		>
 		<p
-			class=" py-20 text-xl font-bold font-mono italic
+			class=" py-20 text-xl font-bold font-mono
             mb-10 mx-10 px-10 sm:px-12 md:px-16 lg:px-20 xl:px-24"
 		>
 			This web-based application offers a hassle-free way to scan and remove duplicate tracks
-			from your Spotify playlist in just a few clicks. With Repeat Offender, you can easily
+			from your Spotify playlists in just a few clicks. With Repeat Offender, you can easily
 			keep your playlist organized and avoid redundancy, making your music listening
 			experience even more enjoyable.
 		</p>
@@ -63,8 +63,8 @@
 			/>
 			<QuestionCard
 				title="Why do I need to sign into Spotify?"
-				description="Repeat Offender needs to access your Spotify account to read your playlists
-                    and remove duplicate tracks from them. We do not store any of your data."
+				description="Repeat Offender needs to access your Spotify data to read your playlists
+                    and remove duplicate tracks from them. Further permissions details are outlined when initially signing in."
 			/>
 			<QuestionCard
 				title="Does this work with other music streaming services? (Amazon Music, Apple Music, etc...)"
