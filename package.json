@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sveltejs/adapter-vercel": "^2.4.3"
+		"@sveltejs/adapter-vercel": "^2.4.3",
+		"spotify-web-api-js": "^1.5.2"
 	}
 }

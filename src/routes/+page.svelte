@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import type { LayoutServerData } from './$types';
 	import QuestionCard from './QuestionCard.svelte';
 </script>
 

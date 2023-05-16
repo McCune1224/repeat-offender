@@ -87,20 +87,20 @@
 				<div class="py-10">
 					<PlaylistCard
 						title={repeatOffender.playlist.name}
-                        playlistID={repeatOffender.playlist.id}
+						playlistID={repeatOffender.playlist.id}
 						items={repeatOffender.repeatTracks}
 						image={repeatOffender.playlist.images[0]}
-                        token={token}
+						{token}
 					/>
 				</div>
 			{/each}
 			{#if likedDuplicates.length > 0}
 				<PlaylistCard
 					title="Liked Songs"
-                    playlistID=""
+					playlistID=""
 					items={likedDuplicates}
 					image={null}
-                    token={token}
+					{token}
 				/>
 			{/if}
 		{:else}

@@ -6,11 +6,19 @@
 		DeleteDuplicateSavedTracks
 	} from '$lib/spotify/API';
 
+	import SpotifyWebApi from 'spotify-web-api-js';
+	import { onMount } from 'svelte';
+
 	export let title: string;
 	export let playlistID: string;
 	export let items: Array<TrackItems>;
 	export let image: SpotifyImage | null;
 	export let token: string;
+	const spotifyApi = new SpotifyWebApi();
+
+	onMount(async () => {
+		spotifyApi.setAccessToken(token);
+	});
 </script>
 
 <div>
@@ -49,10 +57,6 @@
             font-bold py-5 px-4"
 				on:click={async () => {
 					console.log('DELETE FOR LIKED SONGS');
-					await DeleteDuplicateSavedTracks(
-						token,
-						items.map((item) => item.id)
-					);
 				}}
 			>
 				Delete Duplicates</button
@@ -67,11 +71,6 @@
             font-bold py-5 px-4"
 				on:click={async () => {
 					console.log('DELTE FOR PLAYLIST');
-					await DeleteDuplicateTracksFromPlaylist(
-						token,
-						playlistID,
-						items.map((item) => item.id)
-					);
 				}}
 			>
 				Delete Duplicates</button
