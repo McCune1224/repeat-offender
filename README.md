@@ -1,17 +1,38 @@
-# Spotify Playlist Duplicate Remover
-This website allows you to remove duplicate tracks from your Spotify playlists. Simply log in with your Spotify account and select the playlist you want to remove duplicates from. The website will display a list of all tracks in the playlist and allow you to remove any duplicates.
+# create-svelte
 
-## Features
-* Log in with your Spotify account
-* Select a playlist to remove duplicates from
-* Display a list of all tracks in the playlist
-* Remove any duplicate tracks from the playlist
-* Authentication with Spotify using OAuth2
-* Developed using SvelteKit and TypeScript
-# Technologies Used
-* TypeScript
-* SvelteKit
-* OAuth2
-* Vite
-* Railway.app
-* Spotify Web API
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+
+## Creating a project
+
+If you're seeing this, you've probably already done this step. Congrats!
+
+```bash
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
