@@ -5,9 +5,10 @@
 	import '@skeletonlabs/skeleton/styles/skeleton.css';
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
-	import { AppBar } from '@skeletonlabs/skeleton';
+	import { AppBar, Toast } from '@skeletonlabs/skeleton';
 </script>
 
+<Toast />
 <AppBar>
 	<svelte:fragment slot="lead">(icon)</svelte:fragment>
 	<p>Repeat-Offender</p>
