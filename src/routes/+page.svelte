@@ -1,28 +1,24 @@
 <script lang="ts">
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
-	import { redirect } from '@sveltejs/kit';
 	import { onMount } from 'svelte';
 
 	//check url for error parameter
 	onMount(() => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const error = urlParams.get('error');
+		const t: ToastSettings = {
+			message: ''
+		};
 		if (error) {
 			let errorMessage = '';
 			switch (error) {
 				case 'invalid_grant':
 					errorMessage = 'You must accept the authorization request to use Repeat-Offender';
-					break;
 				default:
-					errorMessage = 'An unknown error occurred';
-					break;
+                errorMessage = 'An unknown error occurred';
 			}
-			const t: ToastSettings = {
-				message: errorMessage
-			};
+			t.message = errorMessage;
 			toastStore.trigger(t);
-			window.location.href = '/';
-			return;
 		}
 	});
 </script>

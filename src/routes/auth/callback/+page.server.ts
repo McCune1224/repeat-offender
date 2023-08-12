@@ -33,11 +33,13 @@ export const load = (async ({ url, cookies }) => {
 
 	const tokenResponse = await tokenRequest.json();
 	if (tokenResponse.error) {
-        throw redirect(301, `/?error=${error}`);
+		throw redirect(301, `/?error=${error}`);
 	}
 
-    const { access_token, refresh_token } = tokenResponse;
-    cookies.set('access_token', access_token);
-    throw redirect(301, '/');
-
+	const { access_token, refresh_token } = tokenResponse;
+	cookies.set('access_token', access_token, {
+		path: '/',
+		maxAge: 60 * 60
+	});
+	throw redirect(301, '/');
 }) satisfies PageServerLoad;
