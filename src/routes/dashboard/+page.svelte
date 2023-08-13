@@ -39,17 +39,6 @@
 		<ul class="grid grid-cols-2 gap-2">
 			{#each userOwnedPlaylists as playlist}
 				<PlaylistCard {playlist} client={spotifyClient} />
-				<!-- <li class="card variant-ghost-secondary text-center"> -->
-				<!-- 	<header class="h4 card-header">{playlist.name}</header> -->
-				<!-- 	<section class="h5 p-4" /> -->
-				<!-- 	<LoadingButton -->
-				<!-- 		click={async () => { -->
-				<!-- 			await FilterDuplicateTracks(spotifyClient, playlist); -->
-				<!-- 		}} -->
-				<!-- 		text="Check for Duplicates" -->
-				<!-- 	/> -->
-				<!-- 	<footer class="h5 card-footer" /> -->
-				<!-- </li> -->
 			{/each}
 		</ul>
 	{:else}
