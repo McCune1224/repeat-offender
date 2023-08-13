@@ -14,8 +14,11 @@
 			switch (error) {
 				case 'invalid_grant':
 					errorMessage = 'You must accept the authorization request to use Repeat-Offender';
+				// error message sent from dashboard (normally occurs when token expires and gets redirected here)
+				case 'not_logged_in':
+					errorMessage = 'Must be logged in to use.';
 				default:
-                errorMessage = 'An unknown error occurred';
+					errorMessage = 'An unknown error occurred';
 			}
 			t.message = errorMessage;
 			toastStore.trigger(t);

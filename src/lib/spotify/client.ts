@@ -39,5 +39,8 @@ export async function FilterDuplicateTracks(
         }
     });
     console.log('TOTAL NUMBER OF DUPLICATE TRACKS:', duplicateTracks.length);
+    duplicateTracks.forEach((track) => {
+        console.log(track.track.name)
+    })
     return duplicateTracks;
 }

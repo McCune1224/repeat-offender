@@ -4,6 +4,8 @@
 	import 'spotify-web-api-js';
 	import { onMount } from 'svelte';
 	import { FilterDuplicateTracks } from '$lib/spotify/client';
+	import LoadingButton from './LoadingButton.svelte';
+	import PlaylistCard from './PlaylistCard.svelte';
 
 	export let data: PageData;
 	let user: SpotifyApi.CurrentUsersProfileResponse;
@@ -27,28 +29,27 @@
 	{#if user}
 		<p>
 			{user.display_name}
+			<button class="btn variant-soft-primary"> Check Entire Library for Duplicates </button>
 		</p>
 	{:else}
 		<p>Loading...</p>
 	{/if}
 
 	{#if userOwnedPlaylists}
-		<ul class="grid grid-cols-2">
+		<ul class="grid grid-cols-2 gap-2">
 			{#each userOwnedPlaylists as playlist}
-				<li class="card">
-					<header class="card-header">{playlist.name}</header>
-					<section class="p-4">{playlist.tracks.total}</section>
-					<footer class="card-footer">
-						<button
-							class="btn variant-glass"
-							on:click={async () => {
-								await FilterDuplicateTracks(spotifyClient, playlist);
-							}}
-						>
-							Check for Duplicates
-						</button>
-					</footer>
-				</li>
+				<PlaylistCard {playlist} client={spotifyClient} />
+				<!-- <li class="card variant-ghost-secondary text-center"> -->
+				<!-- 	<header class="h4 card-header">{playlist.name}</header> -->
+				<!-- 	<section class="h5 p-4" /> -->
+				<!-- 	<LoadingButton -->
+				<!-- 		click={async () => { -->
+				<!-- 			await FilterDuplicateTracks(spotifyClient, playlist); -->
+				<!-- 		}} -->
+				<!-- 		text="Check for Duplicates" -->
+				<!-- 	/> -->
+				<!-- 	<footer class="h5 card-footer" /> -->
+				<!-- </li> -->
 			{/each}
 		</ul>
 	{:else}
