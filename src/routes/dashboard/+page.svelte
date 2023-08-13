@@ -10,6 +10,7 @@
 	export let data: PageData;
 	let user: SpotifyApi.CurrentUsersProfileResponse;
 	let userOwnedPlaylists: SpotifyApi.PlaylistObjectSimplified[];
+	let title = 'Dashboard';
 	const spotifyClient = new SpotifyWebApi();
 	spotifyClient.setAccessToken(data.props.access_token as string);
 
@@ -24,12 +25,12 @@
 </script>
 
 <div>
-	<h1 class="h1">Searching your Playlists for Duplicates...</h1>
+	<h1 class="h1">{title}</h1>
 
 	{#if user}
 		<p>
 			{user.display_name}
-			<button class="btn variant-soft-primary"> Check Entire Library for Duplicates </button>
+			<button class="btn variant-soft-primary"> Check Entire Library for Repeats</button>
 		</p>
 	{:else}
 		<p>Loading...</p>

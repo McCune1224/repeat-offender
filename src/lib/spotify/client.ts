@@ -38,9 +38,28 @@ export async function FilterDuplicateTracks(
             duplicateTracksTally.set(track.track.id, 1);
         }
     });
-    console.log('TOTAL NUMBER OF DUPLICATE TRACKS:', duplicateTracks.length);
-    duplicateTracks.forEach((track) => {
-        console.log(track.track.name)
-    })
     return duplicateTracks;
+}
+
+export async function RemoveDuplicates(
+    client: SpotifyWebApi.SpotifyWebApiJs,
+    playlistID: string,
+    duplicateTracks: SpotifyApi.PlaylistTrackObject[]
+) {
+    const trackURIs: string[] = [];
+    duplicateTracks.forEach((track) => {
+        trackURIs.push(track.track.uri);
+    });
+    client.removeTracksFromPlaylist(playlistID, trackURIs);
+
+    // Spotify API is very cool and based and will remove ALL instances of a track even if you only specify one track
+    // So need to add back in the first instance of each track so that the playlist maintains a single instance of each track
+    let uniqueDuplicateTracks = new Set<string>();
+    duplicateTracks.forEach(async (track) => {
+        uniqueDuplicateTracks.add(track.track.uri);
+    });
+
+    uniqueDuplicateTracks.forEach(async (trackID) => {
+        let response = await client.addTracksToPlaylist(playlistID, [trackID]);
+    });
 }

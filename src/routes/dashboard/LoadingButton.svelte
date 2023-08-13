@@ -2,10 +2,11 @@
 	export let text: string = 'Check for Duplicates';
 	export let click: () => {};
 	let loading: boolean = false;
+    export let disabled: boolean = false;
 </script>
 
 <button
-	disabled={loading}
+	disabled={loading || disabled}
 	class="btn variant-soft-primary"
 	on:click={async () => {
 		loading = true;
