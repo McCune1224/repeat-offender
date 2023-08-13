@@ -6,14 +6,23 @@
 	// Most of your app wide CSS should be put in this file
 	import '../app.postcss';
 	import { AppBar, Toast } from '@skeletonlabs/skeleton';
+	import type { LayoutServerData } from './$types';
+	export let data: LayoutServerData;
 </script>
 
 <Toast />
 <AppBar>
-	<svelte:fragment slot="lead">(icon)</svelte:fragment>
-	<p>Repeat-Offender</p>
+	<svelte:fragment slot="lead">
+		<p class="text-3xl font-bold text-white">Repeat-Offender</p>
+	</svelte:fragment>
 	<svelte:fragment slot="trail">
-		<button class="btn variant-soft-secondary">Insert auth logic here</button>
+		<button class="btn variant-ringed-tertiary justify-end">
+			{#if data.props.authed}
+				<a href="/auth/logout">Logout</a>
+			{:else}
+				<a href="/auth">Log In</a>
+			{/if}
+		</button>
 	</svelte:fragment>
 </AppBar>
 <slot />
