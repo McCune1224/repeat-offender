@@ -2,6 +2,7 @@
 	import { FilterDuplicateTracks, RemoveDuplicates } from '$lib/spotify/client';
 	import type SpotifyWebApi from 'spotify-web-api-js';
 	import LoadingButton from './LoadingButton.svelte';
+
 	export let playlist: SpotifyApi.PlaylistObjectSimplified;
 	export let client: SpotifyWebApi.SpotifyWebApiJs;
 	let analyzed: boolean = false;
@@ -11,7 +12,6 @@
 
 <li class="card variant-ghost-secondary text-center">
 	<header class="h4 card-header">{playlist.name}</header>
-	<section class="h5 p-4" />
 	<LoadingButton
 		click={async () => {
 			duplicateTracks = await FilterDuplicateTracks(client, playlist);
